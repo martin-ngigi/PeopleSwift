@@ -11,6 +11,8 @@
 		A30170392B63725D00B35D26 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30170382B63725D00B35D26 /* ContentView.swift */; };
 		A301703B2B63726000B35D26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A301703A2B63726000B35D26 /* Assets.xcassets */; };
 		A301703F2B63726000B35D26 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A301703E2B63726000B35D26 /* Preview Assets.xcassets */; };
+		A30170472B637A9F00B35D26 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30170462B637A9F00B35D26 /* Model.swift */; };
+		A30170492B637AF300B35D26 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30170482B637AF300B35D26 /* UserViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		A301703A2B63726000B35D26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A301703C2B63726000B35D26 /* PeopleSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeopleSwift.entitlements; sourceTree = "<group>"; };
 		A301703E2B63726000B35D26 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A30170462B637A9F00B35D26 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A30170482B637AF300B35D26 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				A30170362B63725D00B35D26 /* PeopleSwiftApp.swift */,
 				A30170382B63725D00B35D26 /* ContentView.swift */,
+				A30170462B637A9F00B35D26 /* Model.swift */,
+				A30170482B637AF300B35D26 /* UserViewModel.swift */,
 				A301703A2B63726000B35D26 /* Assets.xcassets */,
 				A301703C2B63726000B35D26 /* PeopleSwift.entitlements */,
 				A301703D2B63726000B35D26 /* Preview Content */,
@@ -139,6 +145,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A30170472B637A9F00B35D26 /* Model.swift in Sources */,
+				A30170492B637AF300B35D26 /* UserViewModel.swift in Sources */,
 				A30170392B63725D00B35D26 /* ContentView.swift in Sources */,
 				A30170372B63725D00B35D26 /* PeopleSwiftApp.swift in Sources */,
 			);
