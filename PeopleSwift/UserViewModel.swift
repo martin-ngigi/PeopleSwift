@@ -13,6 +13,7 @@ class UserViewModel: ObservableObject {
     @Published private(set) var users: [User] = []
     @Published private(set) var isLoading = false
     
+    @MainActor
     func fetchUsers() async throws {
         
         isLoading = true // when fetchUsers is called, show fetchUsers

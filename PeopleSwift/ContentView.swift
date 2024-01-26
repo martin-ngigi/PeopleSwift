@@ -9,6 +9,7 @@ import SwiftUI
 
 
 
+
 struct ContentView: View {
     
     @StateObject private var viewModel = UserViewModel()
@@ -22,20 +23,29 @@ struct ContentView: View {
                 NavigationView {
                     List {
                         ForEach(viewModel.users, id: \.id) { user in
-                            VStack {
-                                Text(user.name)
-                                    .bold()
+                            
+                            /**
+                             NavigationLink Can only be used only if our view is in a Navigationview. But has > arrow and right end
+                             */
+                            
+                            /**
+                            //NavigationLink with destination and label
+                            NavigationLink(destination: UserDetailView(user: user)) {
+                                UserInforRowView(name: user.name)
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
-                            .background(
-                                .gray.opacity(0.1),
-                                in: RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            )
-                            .listStyle(.plain)
-                            .navigationTitle("Users")
+                            .listRowSeparator(.hidden)
+                            **/
+                            
+                            // THIS WILL REMOVE > arrow and right end
+                            UserInforRowView(name: user.name)
+                                .background(
+                                    NavigationLink("", destination: UserDetailView(user: user))
+                                        .opacity(0)
+                                )
                         }
                     }
+                    .listStyle(.plain)
+                    .navigationTitle("Users")
                 }
             }
         }
