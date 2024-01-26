@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class UserViewModel: ObservableObject {
     
@@ -16,6 +17,8 @@ class UserViewModel: ObservableObject {
     @Published var users: [User] = []
     @Published var hasError = false
     @Published var error: UserError?
+    
+    private var bag = Set<AnyCancellable>() // intall Combine
 
     
     func fetchUsers() {
@@ -60,9 +63,55 @@ class UserViewModel: ObservableObject {
         }
     }
 
+    func fetchUsersUsingCombine() {
+        let userUrlString = "https://jsonplaceholder.typicode.com/usersss/"
+        
+        if let url = URL(string: userUrlString) {
+            
+            isLoading = true // show loading indicator
+            hasError = false
+            
+            URLSession.shared
+                .dataTaskPublisher(for: url)
+                .receive(on: DispatchQueue.main) // receive data to main thread
+                //.map(\.data)
+                //.decode(type: [User].self, decoder: JSONDecoder()) // Either use decode or tryMap to decode data
+                
+                .tryMap({ res in
+                    
+                    guard let response = res.response as? HTTPURLResponse, response.statusCode >= 200 && response.statusCode <= 300 else {
+                        
+                        print("DEBUG: fetchUsersUsingCombine Failed to decode users data with invalid status code of \(res.response)")
+                
+                        throw UserError.invalidStatusCode
+                    }
+                    
+                    let decoder = JSONDecoder()
+                    guard let users = try? decoder.decode([User].self, from: res.data) else {
+                        throw UserError.failedToDecode
+                    }
+                    print("DEBUG: fetchUsersUsingCombine Failed to decode users data")
+                    return users
+                })
+                .sink { response in
+                    defer{ self.isLoading = false } // hide loading indicator after completing fetch
+                     
+                    switch response {
+                    case .failure(let error):
+                        self.hasError = true
+                        self.error = UserError.custom(error: error)
+                        print("DEBUG: fetchUsersUsingCombine Failed to fetch users data with error \(error.localizedDescription)")
+                    default:
+                        break
+                    }
+                } receiveValue: { [weak self] users in
+                    self?.users = users
+                }.store(in: &bag)
+        }
+    }
     
     @MainActor
-    func fetchUsersSample2() async throws {
+    func fetchUsersAsyncAwait() async throws {
         
         isLoading = true // when fetchUsers is called, show fetchUsers
         defer { isLoading = false }// after fetching users, stop showing loader
@@ -77,6 +126,7 @@ extension UserViewModel{
     enum UserError: LocalizedError {
         case custom(error: Error)
         case failedToDecode
+        case invalidStatusCode
         case unKnownError
         
         var errorDescription: String? {
@@ -85,6 +135,8 @@ extension UserViewModel{
                 return error.localizedDescription
             case .failedToDecode:
                 return "Failed to decode response."
+            case .invalidStatusCode:
+                return "Request fails within invalid range"
             case .unKnownError:
                 return "Unkwown error has occurred."
             }

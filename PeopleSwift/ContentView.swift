@@ -32,11 +32,11 @@ struct ContentView: View {
 
             }
 //            .onAppear(perform: {
-//                Task{  try await viewModel.fetchUsersSample2() }
+//                Task{  try await viewModel.fetchUsersAsyncAwait() }
 //            })
-            .onAppear(perform: viewModel.fetchUsers)
+            .onAppear(perform: viewModel.fetchUsersUsingCombine)
             .alert(isPresented: $viewModel.hasError, error: viewModel.error) {
-                Button(action: viewModel.fetchUsers){
+                Button(action: viewModel.fetchUsersUsingCombine){
                     Text("Retry")
                 }
             }
