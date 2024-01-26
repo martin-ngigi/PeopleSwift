@@ -46,6 +46,7 @@
 		A301702A2B63725D00B35D26 = {
 			isa = PBXGroup;
 			children = (
+				A301704F2B6395AE00B35D26 /* Readme.MD */,
 				A30170352B63725D00B35D26 /* PeopleSwift */,
 				A30170342B63725D00B35D26 /* Products */,
 			);
@@ -70,7 +71,6 @@
 				A301703C2B63726000B35D26 /* PeopleSwift.entitlements */,
 				A301703D2B63726000B35D26 /* Preview Content */,
 				A301704D2B637FFC00B35D26 /* UserDetailView.swift */,
-				A301704F2B6395AE00B35D26 /* Readme.MD */,
 				A30170512B6396C800B35D26 /* UserRowView.swift */,
 			);
 			path = PeopleSwift;

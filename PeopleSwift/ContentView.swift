@@ -26,7 +26,14 @@ struct ContentView: View {
                 else {
                     List {
                         ForEach(viewModel.users, id: \.id ) { user in
+//                            UserRowView(user: user)
+                            
+                            // THIS WILL REMOVE > arrow and right end
                             UserRowView(user: user)
+                                .background(
+                                    NavigationLink("", destination: UserDetailView(user: user))
+                                        .opacity(0)
+                                )
                         }
                     }
                     .listStyle(.plain)
