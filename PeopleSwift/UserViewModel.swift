@@ -77,7 +77,7 @@ class UserViewModel: ObservableObject {
             isLoading =  true
             defer {isLoading = false } // Afetr everything has finished, stop loading
             
-            let usersUrlString = "https://jsonplaceholder.typicode.com/userss/"
+            let usersUrlString = "https://jsonplaceholder.typicode.com/users/"
             //let url = URL(string: usersUrlString)
             guard let url = URL(string: usersUrlString) else {
                 print("DEBUG: fetchUsersAsyncAwait Failed to fetch users with due to poorly formatted url:")
