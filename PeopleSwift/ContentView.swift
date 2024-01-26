@@ -14,6 +14,9 @@ struct ContentView: View {
     
     @StateObject private var viewModel = UserViewModel()
     
+    @State var hasError = false
+    @State var error: UserViewModel.UserError?
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -31,12 +34,16 @@ struct ContentView: View {
                 }
 
             }
-//            .onAppear(perform: {
-//                Task{  try await viewModel.fetchUsersAsyncAwait() }
-//            })
-            .onAppear(perform: viewModel.fetchUsersUsingCombine)
-            .alert(isPresented: $viewModel.hasError, error: viewModel.error) {
-                Button(action: viewModel.fetchUsersUsingCombine){
+            .task {
+               //try? await viewModel.fetchUsersAsyncAwait()
+                await execute()
+            }
+//            .onAppear(perform: viewModel.fetchUsersUsingCombine)
+            .alert(isPresented: $hasError, error: error) {
+                Button{
+//                    viewModel.fetchUsersUsingCombine
+                    Task {try await viewModel.fetchUsersAsyncAwait() }
+                } label: {
                     Text("Retry")
                 }
             }
@@ -47,6 +54,20 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+private extension ContentView {
+    func execute() async {
+        do {
+            try await viewModel.fetchUsersAsyncAwait()
+        }
+        catch{
+            if let userError = error as? UserViewModel.UserError {
+                self.hasError = true
+                self.error = userError
+            }
+        }
+    }
 }
 
 
