@@ -14,8 +14,8 @@ struct ContentView: View {
     
     @StateObject private var viewModel = UserViewModel()
     
-    @State var hasError = false
-    @State var error: UserViewModel.UserError?
+//    @State var hasError = false
+//    @State var error: UserViewModel.UserError?
 
     var body: some View {
         NavigationView {
@@ -35,11 +35,11 @@ struct ContentView: View {
 
             }
             .task {
-               //try? await viewModel.fetchUsersAsyncAwait()
-                await execute()
+               try? await viewModel.fetchUsersAsyncAwait()
+//                await execute()
             }
 //            .onAppear(perform: viewModel.fetchUsersUsingCombine)
-            .alert(isPresented: $hasError, error: error) {
+            .alert(isPresented: $viewModel.hasError, error: viewModel.error) {
                 Button{
 //                    viewModel.fetchUsersUsingCombine
                     Task {try await viewModel.fetchUsersAsyncAwait() }
@@ -62,10 +62,10 @@ private extension ContentView {
             try await viewModel.fetchUsersAsyncAwait()
         }
         catch{
-            if let userError = error as? UserViewModel.UserError {
-                self.hasError = true
-                self.error = userError
-            }
+//            if let userError = error as? UserViewModel.UserError {
+//                self.hasError = true
+//                self.error = userError
+//            }
         }
     }
 }

@@ -15,8 +15,8 @@ class UserViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     
     @Published var users: [User] = []
-//    @Published var hasError = false
-//    @Published var error: UserError?
+    @Published var hasError = false
+    @Published var error: UserError?
     
     private var bag = Set<AnyCancellable>() // import Combine
 
@@ -73,33 +73,45 @@ class UserViewModel: ObservableObject {
     @MainActor
     func fetchUsersAsyncAwait() async throws {
         do{
-            
+            hasError = false
             isLoading =  true
             defer {isLoading = false } // Afetr everything has finished, stop loading
             
-            let usersUrlString = "https://jsonplaceholder.typicode.com/users/"
+            let usersUrlString = "https://jsonplaceholder.typicode.com/userss/"
             //let url = URL(string: usersUrlString)
             guard let url = URL(string: usersUrlString) else {
                 print("DEBUG: fetchUsersAsyncAwait Failed to fetch users with due to poorly formatted url:")
-                throw UserError.unKnownError
+                hasError = true
+                error = UserError.unKnownError
+                //throw UserError.unKnownError
+                return
             }
             
             let (data, response) = try await URLSession.shared.data(from: url)
             guard let response = response as? HTTPURLResponse, response.statusCode >= 200  && response.statusCode <= 299 else {
-                throw UserError.invalidStatusCode
+                hasError = true
+                error = UserError.invalidStatusCode
+                //throw UserError.invalidStatusCode
+                return
             }
             
             let decoder = JSONDecoder()
             //let users = try decoder.decode([User].self, from: data)
             guard let users = try? decoder.decode([User].self, from: data) else {
-                throw UserError.failedToDecode
+                hasError = true
+                error = UserError.failedToDecode
+                //throw UserError.failedToDecode
+                return
             }
             
             self.users = users
         }
         catch{
             print("DEBUG: fetchUsersAsyncAwait Failed to fetch users with error: \(error.localizedDescription)")
-            throw UserError.custom(error: error)
+            hasError = true
+            self.error = UserError.custom(error: error)
+            //throw UserError.custom(error: error)
+            return
         }
 
     }
