@@ -15,47 +15,32 @@ struct ContentView: View {
     @StateObject private var viewModel = UserViewModel()
     
     var body: some View {
-        ZStack {
-            if viewModel.isLoading {
-                ProgressView()
-            }
-            else {
-                NavigationView {
+        NavigationView {
+            ZStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                }
+                else {
                     List {
-                        ForEach(viewModel.users, id: \.id) { user in
-                            
-                            /**
-                             NavigationLink Can only be used only if our view is in a Navigationview. But has > arrow and right end
-                             */
-                            
-                            /**
-                            //NavigationLink with destination and label
-                            NavigationLink(destination: UserDetailView(user: user)) {
-                                UserInforRowView(name: user.name)
-                            }
-                            .listRowSeparator(.hidden)
-                            **/
-                            
-                            // THIS WILL REMOVE > arrow and right end
-                            UserInforRowView(name: user.name)
-                                .background(
-                                    NavigationLink("", destination: UserDetailView(user: user))
-                                        .opacity(0)
-                                )
+                        ForEach(viewModel.users, id: \.id ) { user in
+                            UserRowView(user: user)
                         }
                     }
                     .listStyle(.plain)
                     .navigationTitle("Users")
                 }
+
             }
-        }
-        .task {
-            do {
-                try await viewModel.fetchUsers()
+//            .onAppear(perform: {
+//                Task{  try await viewModel.fetchUsersSample2() }
+//            })
+            .onAppear(perform: viewModel.fetchUsers)
+            .alert(isPresented: $viewModel.hasError, error: viewModel.error) {
+                Button(action: viewModel.fetchUsers){
+                    Text("Retry")
+                }
             }
-            catch{
-                print("DEBUG: Error occurred while loading user. Error: \(error.localizedDescription)")
-            }
+            
         }
     }
 }

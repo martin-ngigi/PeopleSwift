@@ -7,6 +7,10 @@
 
 import Foundation
 
+/**
+ Codable - Object that allows us to conver and map json  to swift object and vice versa
+ */
+
 struct User: Codable {
     let id: Int
     let name: String
