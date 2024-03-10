@@ -11,50 +11,18 @@ import SwiftUI
 
 
 struct ContentView: View {
-    
-    @StateObject private var viewModel = UserViewModel()
-    
-//    @State var hasError = false
-//    @State var error: UserViewModel.UserError?
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                if viewModel.isLoading {
-                    ProgressView()
+        TabView{
+            UsersListView()
+                .tabItem {
+                    Label("Users List", systemImage: "person.2")
                 }
-                else {
-                    List {
-                        ForEach(viewModel.users, id: \.id ) { user in
-//                            UserRowView(user: user)
-                            
-                            // THIS WILL REMOVE > arrow and right end
-                            UserRowView(user: user)
-                                .background(
-                                    NavigationLink("", destination: UserDetailView(user: user))
-                                        .opacity(0)
-                                )
-                        }
-                    }
-                    .listStyle(.plain)
-                    .navigationTitle("Users")
-                }
-
-            }
-            .task {
-               try? await viewModel.fetchUsersAsyncAwait()
-//                await execute()
-            }
-//            .onAppear(perform: viewModel.fetchUsersUsingCombine)
-            .alert(isPresented: $viewModel.hasError, error: viewModel.error) {
-                Button{
-//                    viewModel.fetchUsersUsingCombine
-                    Task {try await viewModel.fetchUsersAsyncAwait() }
-                } label: {
-                    Text("Retry")
-                }
-            }
             
+            CreateUserView()
+                .tabItem {
+                    Label("Create User", systemImage: "person.badge.plus")
+                }
         }
     }
 }
@@ -63,18 +31,5 @@ struct ContentView: View {
     ContentView()
 }
 
-private extension ContentView {
-    func execute() async {
-        do {
-            try await viewModel.fetchUsersAsyncAwait()
-        }
-        catch{
-//            if let userError = error as? UserViewModel.UserError {
-//                self.hasError = true
-//                self.error = userError
-//            }
-        }
-    }
-}
 
 

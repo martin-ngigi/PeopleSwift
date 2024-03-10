@@ -126,6 +126,65 @@ class UserViewModel: ObservableObject {
         let decoder = JSONDecoder()
         self.users = try decoder.decode([User].self, from: data)
     }
+    
+    @MainActor
+    func createUser() async throws {
+        hasError = false
+        isLoading =  true
+        defer {isLoading = false } // Afetr everything has finished, stop loading
+        
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else {
+            print("DEBUG: fetchUsersAsyncAwait Failed to fetch users with due to poorly formatted url:")
+            hasError = true
+            error = UserError.unKnownError
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let userModel = User(
+            id: 1,
+            name: "John Doe",
+            username: "jonh_doe",
+            address: Address(
+                street: "Moi Avenue",
+                suite: "!st Park",
+                city: "Nairobi",
+                zipcode: "0938",
+                geo: Geo(
+                    lat: "37.3159",
+                    lng: "81.1496"
+                )
+            ),
+            phone: "0712345678",
+            email: "wincere@april.biz",
+            website: "web.com",
+            company: Company(
+                name: "Romaguera-Crona",
+                catchPhrase: "ulti-layered client-server neural-net",
+                bs: "harness real-time e-markets"
+            )
+        )
+        
+        do {
+            let jsonData = try JSONEncoder().encode(userModel)
+            request.httpBody = jsonData
+            
+            let (data, _) = try await URLSession.shared.data(for: request)
+            
+            if let response = try? JSONDecoder().decode(User.self, from: data){
+                print("DEBUG: post user response is \(response)")
+            }
+        }
+        catch {
+            hasError = true
+            self.error = UserError.custom(error: error)
+            print("Error making POST request: \(error)")
+        }
+    }
 }
 
 extension UserViewModel{

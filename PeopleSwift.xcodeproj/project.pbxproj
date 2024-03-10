@@ -16,6 +16,8 @@
 		A301704E2B637FFC00B35D26 /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301704D2B637FFC00B35D26 /* UserDetailView.swift */; };
 		A30170502B6395AE00B35D26 /* Readme.MD in Resources */ = {isa = PBXBuildFile; fileRef = A301704F2B6395AE00B35D26 /* Readme.MD */; };
 		A30170522B6396C800B35D26 /* UserRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30170512B6396C800B35D26 /* UserRowView.swift */; };
+		A3E0A4CA2B9E4DBF00FEBE24 /* UsersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E0A4C92B9E4DBF00FEBE24 /* UsersListView.swift */; };
+		A3E0A4CC2B9E4E5400FEBE24 /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E0A4CB2B9E4E5400FEBE24 /* CreateUserView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		A301704D2B637FFC00B35D26 /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
 		A301704F2B6395AE00B35D26 /* Readme.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.MD; sourceTree = "<group>"; };
 		A30170512B6396C800B35D26 /* UserRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRowView.swift; sourceTree = "<group>"; };
+		A3E0A4C92B9E4DBF00FEBE24 /* UsersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListView.swift; sourceTree = "<group>"; };
+		A3E0A4CB2B9E4E5400FEBE24 /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				A301703D2B63726000B35D26 /* Preview Content */,
 				A301704D2B637FFC00B35D26 /* UserDetailView.swift */,
 				A30170512B6396C800B35D26 /* UserRowView.swift */,
+				A3E0A4C92B9E4DBF00FEBE24 /* UsersListView.swift */,
+				A3E0A4CB2B9E4E5400FEBE24 /* CreateUserView.swift */,
 			);
 			path = PeopleSwift;
 			sourceTree = "<group>";
@@ -160,7 +166,9 @@
 				A30170392B63725D00B35D26 /* ContentView.swift in Sources */,
 				A30170372B63725D00B35D26 /* PeopleSwiftApp.swift in Sources */,
 				A301704E2B637FFC00B35D26 /* UserDetailView.swift in Sources */,
+				A3E0A4CC2B9E4E5400FEBE24 /* CreateUserView.swift in Sources */,
 				A30170522B6396C800B35D26 /* UserRowView.swift in Sources */,
+				A3E0A4CA2B9E4DBF00FEBE24 /* UsersListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
