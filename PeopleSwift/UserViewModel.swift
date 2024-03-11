@@ -145,6 +145,11 @@ class UserViewModel: ObservableObject {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        // Add bearer token to the Authorization header
+          let bearerToken = "YourBearerTokenHere"
+          request.setValue("Bearer \(bearerToken)", forHTTPHeaderField: "Authorization")
+          
+        
         let userModel = User(
             id: 1,
             name: "John Doe",
